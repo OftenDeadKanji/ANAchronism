@@ -15,12 +15,13 @@ public class PortalTeleporter : MonoBehaviour
         {
             Vector3 portalToPlayer = player.position - transform.position;
             float dot = Vector3.Dot(transform.forward.normalized, portalToPlayer.normalized);
-            Debug.Log(dot);
+            
             if (dot < 0.0f)
             {
                 float rotationDiff = -Quaternion.Angle(transform.rotation, reciever.rotation);
                 rotationDiff += 180.0f;
-                player.Rotate(Vector3.up, rotationDiff);
+                //player.Rotate(Vector3.up, rotationDiff);
+
                 Vector3 posOffset = Quaternion.Euler(0.0f, rotationDiff, 0.0f) * portalToPlayer;
                 player.position = reciever.position + posOffset;
 
@@ -31,7 +32,6 @@ public class PortalTeleporter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("coœ wesz³o: " + other.tag);
         if (other.CompareTag("MainCamera"))
         {
             isPlayerOverlapping = true;

@@ -7,6 +7,8 @@ public class PortalCamera : MonoBehaviour
     [SerializeField] private Portal owningPortal;
     [SerializeField] private Portal connectedPortal;
 
+    //[SerializeField] private Transform player;
+
     void Start()
     {
         if (gameObject.transform.parent != null)
@@ -26,7 +28,7 @@ public class PortalCamera : MonoBehaviour
     void Update()
     {
         Vector3 playerOffsetFromPortal = Camera.main.transform.position - connectedPortal.gameObject.transform.position;
-        //transform.position = owningPortal.gameObject.transform.position + playerOffsetFromPortal;
+        transform.position = owningPortal.gameObject.transform.position + playerOffsetFromPortal;
 
         float angularPortalRotationDiff =
             Quaternion.Angle(owningPortal.transform.rotation, connectedPortal.transform.rotation);
