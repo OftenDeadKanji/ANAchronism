@@ -58,7 +58,7 @@ public class PlayerMovementController : MonoBehaviour
                             var portal = portalParent.GetComponent<Portal>();
                             if (portal != null)
                             {
-                                var connectedPortal = portal.connectedPortal;
+                                var connectedPortal = portal.ConnectedPortal;
                                 var portalsPosDiff = connectedPortal.transform.position - portalParent.position;
                                 var portalsRotationDiff = -Quaternion.Angle(connectedPortal.transform.rotation, portalParent.rotation);
                                 portalsRotationDiff += 180.0f;

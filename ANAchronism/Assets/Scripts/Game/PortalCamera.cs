@@ -4,25 +4,16 @@ using UnityEngine;
 
 public class PortalCamera : MonoBehaviour
 {
-    [SerializeField] private Portal owningPortal;
-    [SerializeField] private Portal connectedPortal;
-
-    //[SerializeField] private Transform player;
-
-    void Start()
+    private Portal owningPortal;
+    public Portal OwningPortal
     {
-        if (gameObject.transform.parent != null)
-        {
-            owningPortal = gameObject.transform.parent.GetComponent<Portal>();
-            if (owningPortal == null)
-            {
-                Debug.LogError("CameraPortal parent is not a portal!");
-            }
-            else
-            {
-                connectedPortal = owningPortal.connectedPortal;
-            }
-        }
+        set => owningPortal = value;
+    }
+
+    private Portal connectedPortal;
+    public Portal ConnectedPortal
+    {
+        set => connectedPortal = value;
     }
 
     void Update()
@@ -34,9 +25,11 @@ public class PortalCamera : MonoBehaviour
 
         Quaternion portalRotationDiff = Quaternion.AngleAxis(angularPortalRotationDiff, Vector3.up);
 
-        Vector3 newCameraDirection = portalRotationDiff * Camera.main.transform.forward;
+        //Vector3 newCameraDirection = portalRotationDiff * Camera.main.transform.forward;
 
-        transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
-        transform.RotateAround(owningPortal.transform.position, Vector3.up, 180.0f);
+        //transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
+        transform.RotateAround(owningPortal.transform.position, Vector3.up, angularPortalRotationDiff + 180.0f);
+        transform.rotation = Camera.main.transform.rotation;
+        
     }
 }
