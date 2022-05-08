@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PortalCamera : MonoBehaviour
@@ -23,13 +21,7 @@ public class PortalCamera : MonoBehaviour
 
         float angularPortalRotationDiff = Quaternion.Angle(owningPortal.transform.rotation, connectedPortal.transform.rotation);
 
-        Quaternion portalRotationDiff = Quaternion.AngleAxis(angularPortalRotationDiff, Vector3.up);
-
-        //Vector3 newCameraDirection = portalRotationDiff * Camera.main.transform.forward;
-
-        //transform.rotation = Quaternion.LookRotation(newCameraDirection, Vector3.up);
         transform.RotateAround(owningPortal.transform.position, Vector3.up, angularPortalRotationDiff + 180.0f);
         transform.rotation = Camera.main.transform.rotation;
-        
     }
 }
