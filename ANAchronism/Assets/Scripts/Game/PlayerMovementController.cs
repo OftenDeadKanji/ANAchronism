@@ -59,14 +59,15 @@ public class PlayerMovementController : MonoBehaviour
                             if (portal != null)
                             {
                                 var connectedPortal = portal.ConnectedPortal;
+
                                 var portalsPosDiff = connectedPortal.transform.position - portalParent.position;
                                 var portalsRotationDiff = -Quaternion.Angle(connectedPortal.transform.rotation, portalParent.rotation);
                                 portalsRotationDiff += 180.0f;
                                 var rot = Quaternion.Euler(0.0f, portalsRotationDiff, 0.0f) * rightControllerTransform.forward;
+                                
                                 RaycastHit hit2;
                                 if (Physics.Raycast(hit.point + portalsPosDiff, rot, out hit2))
                                 {
-                                    
                                     player.position = new Vector3(hit2.point.x, hit2.point.y, hit2.point.z);
                                 }
                             }
