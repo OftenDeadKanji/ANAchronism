@@ -19,8 +19,13 @@ public class PlayerMovementController : MonoBehaviour
         {
             Debug.LogError("vrInputManager is missing in PlayerMovementController!");
         }
+
+        obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        obj.transform.position = Vector3.zero;
+        obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
     }
 
+    private GameObject obj;
     void Update()
     {
 #if PHYSICAL_VR_DEVICE_ON
@@ -29,8 +34,7 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
 #endif
         {
-            RaycastHit hit;
-            if (Physics.Raycast(vrInputManager.RightControllerTransform.position, vrInputManager.RightControllerTransform.forward, out hit))
+            if (Physics.Raycast(vrInputManager.RightControllerTransform.position, vrInputManager.RightControllerTransform.forward, out var hit))
             {
                 Debug.Log("Teleport!");
 
@@ -44,15 +48,37 @@ public class PlayerMovementController : MonoBehaviour
                         {
                             var connectedPortal = portal.ConnectedPortal;
 
-                            var portalsPosDiff = connectedPortal.transform.position - portalParent.position;
-                            var portalsRotationDiff = -Quaternion.Angle(connectedPortal.transform.rotation, portalParent.rotation);
-                            portalsRotationDiff += 180.0f;
-                            var rot = Quaternion.Euler(0.0f, portalsRotationDiff, 0.0f) * vrInputManager.RightControllerTransform.forward;
+                            var portalsPosDiff = connectedPortal.transform.position - portal.transform.position;
 
-                            RaycastHit hit2;
-                            if (Physics.Raycast(hit.point + portalsPosDiff, rot, out hit2))
+                            var newHitPos = hit.point + portalsPosDiff;
+                            
+
+                            // 3. Calculate rot (as euler) diff
+                            Vector3 connEuler = connectedPortal.transform.eulerAngles;
+                            Vector3 offsetEuler = portal.transform.eulerAngles;
+
+                            Vector3 eulerDiff = offsetEuler - connEuler;
+                            
+                            var rot = vrInputManager.RightControllerTransform.forward;
+                            
+                            rot = Quaternion.Euler(eulerDiff) * rot;
+                            
+                            var pos = portal.transform.InverseTransformPoint(hit.point);
+                            pos = Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f)) * pos;
+                            var newPos = connectedPortal.transform.TransformPoint(pos);
+
+                            //obj.transform.position = newPos;
+                            Debug.Log(hit.point);
+                            Debug.Log(portalsPosDiff);
+
+                            Debug.DrawLine(newPos, newPos + rot * 2, Color.black, 5);
+                            if (Physics.Raycast(newPos, rot, out var hit2))
                             {
-                                player.position = new Vector3(hit2.point.x, hit2.point.y, hit2.point.z);
+                                if (hit2.collider.CompareTag("TeleportationArea"))
+                                {
+                                    player.position = new Vector3(hit2.point.x, hit2.point.y, hit2.point.z);
+                                    player.rotation = Quaternion.Euler(eulerDiff) * player.rotation;
+                                }
                             }
                             else
                             {
