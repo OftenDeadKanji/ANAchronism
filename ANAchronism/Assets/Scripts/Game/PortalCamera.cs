@@ -17,6 +17,17 @@ public class PortalCamera : MonoBehaviour
 
     void Update()
     {
+        var ownRenderer = owningPortal.RenderPlane.GetComponent<Renderer>();
+        var connRenderer = connectedPortal.RenderPlane.GetComponent<Renderer>();
+        if (ownRenderer != null && connRenderer != null && (ownRenderer.isVisible || connRenderer.isVisible))
+        {
+            UpdateTransform();
+            DoTheClipPlane();
+        }
+    }
+
+    void UpdateTransform()
+    {
         // 1. PortalCamera same as OwningPortal
         transform.position = owningPortal.transform.position;
         transform.rotation = owningPortal.transform.rotation;
@@ -48,8 +59,6 @@ public class PortalCamera : MonoBehaviour
 
         // 8. Rotate around the portal
         this.transform.RotateAround(owningPortal.transform.position, owningPortal.transform.up, 180.0f);
-
-        DoTheClipPlane();
     }
 
     void DoTheClipPlane()
