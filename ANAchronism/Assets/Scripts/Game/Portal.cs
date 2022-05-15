@@ -8,7 +8,12 @@ public class Portal : MonoBehaviour
     {
         get => portalCamera;
     }
+
     private GameObject portalRenderPlane;
+    public GameObject RenderPlane
+    {
+        get => portalRenderPlane;
+    }
 
     [SerializeField] private Portal connectedPortal;
     public Portal ConnectedPortal
