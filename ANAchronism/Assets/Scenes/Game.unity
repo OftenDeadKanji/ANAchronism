@@ -804,6 +804,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipLimit
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipOffset
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5111772191508820504, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: connectedPortal
@@ -832,7 +842,7 @@ PrefabInstance:
     - target: {fileID: 6107906584491792543, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d7b93a121b60f249836fcd5a096a10a, type: 3}
@@ -1245,7 +1255,7 @@ PrefabInstance:
     - target: {fileID: 35060124064399282, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2810178317991252531, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
@@ -1301,6 +1311,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipLimit
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipOffset
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5111772191508820504, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
@@ -3241,6 +3261,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipLimit
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipOffset
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5111772191508820504, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: connectedPortal
@@ -3269,7 +3299,7 @@ PrefabInstance:
     - target: {fileID: 6107906584491792543, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d7b93a121b60f249836fcd5a096a10a, type: 3}
@@ -4818,6 +4848,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipLimit
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821876832642697614, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: nearClipOffset
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5111772191508820504, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}
       propertyPath: connectedPortal
@@ -4827,6 +4867,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Portal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107906584491792543, guid: 7d7b93a121b60f249836fcd5a096a10a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7488371985198268146, guid: 7d7b93a121b60f249836fcd5a096a10a,
         type: 3}

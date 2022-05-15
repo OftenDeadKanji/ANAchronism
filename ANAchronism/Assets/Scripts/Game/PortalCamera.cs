@@ -48,5 +48,25 @@ public class PortalCamera : MonoBehaviour
 
         // 8. Rotate around the portal
         this.transform.RotateAround(owningPortal.transform.position, owningPortal.transform.up, 180.0f);
+
+        DoTheClipPlane();
+    }
+
+    void DoTheClipPlane()
+    {
+        var portalCam = GetComponent<Camera>();
+        var renderPlaneTransform = owningPortal.RenderPlane.transform;
+
+        var forward = owningPortal.transform.forward;
+        var position = renderPlaneTransform.position;
+
+        Plane p = new Plane(forward, position);
+        Vector4 clipPlane = new Vector4(p.normal.x, p.normal.y, p.normal.z, p.distance);
+
+        Vector4 clipPlaneCameraSpace =
+            Matrix4x4.Transpose(Matrix4x4.Inverse(portalCam.worldToCameraMatrix)) * clipPlane;
+
+        var newMat = Camera.main.CalculateObliqueMatrix(clipPlaneCameraSpace);
+        portalCam.projectionMatrix = newMat;
     }
 }
