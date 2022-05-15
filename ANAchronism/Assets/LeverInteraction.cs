@@ -13,48 +13,53 @@ public class LeverInteraction : MonoBehaviour
 
     private bool isInRange = false;
 
-    private InputDevice leftController;
-    [SerializeField] private Transform leftControllerTransform;
+    [SerializeField] VRInputManager vrInputManager;
+    public VRInputManager VRInputManager
+    {
+        set => vrInputManager = value;
+    }
+
 
     void Start()
     {
         m_OffChild.SetActive(!isActivated);
         m_OnChild.SetActive(isActivated);
+
+        if (vrInputManager == null)
+        {
+            Debug.LogError("vrInputManager is missing in PlayerMovementController!");
+        }
     }
 
     void Update()
     {
 #if PHYSICAL_VR_DEVICE_ON
-        if (leftController.TryGetFeatureValue(CommonUsages.trigger, out triggerValue))
+        if (vrInputManager.GetLeftControllerTriggerValue() > 0.1f)
 #else
         if (Input.GetKeyDown(KeyCode.G))
 #endif
         {
-#if PHYSICAL_VR_DEVICE_ON
-            if (triggerValue > 0.1f)
-#endif
+            if (isInRange)
             {
-                if (isInRange)
+                RaycastHit hit;
+                Debug.DrawRay(vrInputManager.LeftControllerTransform.position, vrInputManager.LeftControllerTransform.forward, Color.black);
+                if (Physics.Raycast(vrInputManager.LeftControllerTransform.position, vrInputManager.LeftControllerTransform.forward, out hit, float.PositiveInfinity, LayerMask.GetMask("Default")))
                 {
-                    RaycastHit hit;
-                    Debug.DrawRay(leftControllerTransform.position, leftControllerTransform.forward, Color.black);
-                    if (Physics.Raycast(leftControllerTransform.position, leftControllerTransform.forward, out hit, float.PositiveInfinity, LayerMask.GetMask("Default")))
+                    if (hit.collider.gameObject == this.m_OnChild || hit.collider.gameObject == this.m_OffChild)
                     {
-                        if (hit.collider.gameObject == this.m_OnChild || hit.collider.gameObject == this.m_OffChild)
-                        {
-                            changeLeverState();
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Nie");
+                        ChangeLeverState();
                     }
                 }
+                else
+                {
+                    Debug.Log("Nie");
+                }
             }
+            
         }
     }
 
-    void changeLeverState()
+    void ChangeLeverState()
     {
         isActivated = !isActivated;
 

@@ -15,8 +15,11 @@ public class ButtonInteraction : MonoBehaviour
 
     private bool isInRange = false;
 
-    private InputDevice leftController;
-    [SerializeField] private Transform leftControllerTransform;
+    [SerializeField] VRInputManager vrInputManager;
+    public VRInputManager VRInputManager
+    {
+        set => vrInputManager = value;
+    }
 
     void Start()
     {
@@ -27,40 +30,40 @@ public class ButtonInteraction : MonoBehaviour
         }
 
         m_Renderer.material = isActivated ? m_ButtonActivateMaterial : m_ButtonInactivateMaterial;
+
+        if (vrInputManager == null)
+        {
+            Debug.LogError("vrInputManager is missing in PlayerMovementController!");
+        }
     }
 
     void FixedUpdate()
     {
 #if PHYSICAL_VR_DEVICE_ON
-        if (leftController.TryGetFeatureValue(CommonUsages.trigger, out triggerValue))
+        if (vrInputManager.GetLeftControllerTriggerValue() > 0.1f)
 #else
         if (Input.GetKeyDown(KeyCode.G))
 #endif
         {
-#if PHYSICAL_VR_DEVICE_ON
-            if (triggerValue > 0.1f)
-#endif
+            if (isInRange)
             {
-                if (isInRange)
+                RaycastHit hit;
+                if (Physics.Raycast(vrInputManager.LeftControllerTransform.position, vrInputManager.LeftControllerTransform.forward, out hit, float.PositiveInfinity, LayerMask.GetMask("Default")))
                 {
-                    RaycastHit hit;
-                    Debug.DrawRay(leftControllerTransform.position, leftControllerTransform.forward, Color.black);
-                    if (Physics.Raycast(leftControllerTransform.position, leftControllerTransform.forward, out hit, float.PositiveInfinity, LayerMask.GetMask("Default")))
+                    if (hit.collider.gameObject == this.m_SphereChild)
                     {
-                        if (hit.collider.gameObject == this.m_SphereChild)
-                        {
-                            changeButtonState();
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Nie");
+                        ChangeButtonState();
                     }
                 }
+                else
+                {
+                    Debug.Log("Nie");
+                }
             }
+
         }
     }
-    public void changeButtonState()
+    void ChangeButtonState()
     {
         isActivated = !isActivated;
         m_Renderer.material = isActivated ? m_ButtonActivateMaterial : m_ButtonInactivateMaterial;
