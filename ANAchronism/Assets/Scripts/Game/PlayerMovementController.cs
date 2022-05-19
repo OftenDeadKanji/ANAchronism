@@ -40,14 +40,12 @@ public class PlayerMovementController : MonoBehaviour
 						if (portal != null)
 						{
 							var connectedPortal = portal.ConnectedPortal;
-
-							var portalsPosDiff = connectedPortal.transform.position - portal.transform.position;
-
+							
 							Vector3 connEuler = connectedPortal.transform.eulerAngles;
 							Vector3 offsetEuler = portal.transform.eulerAngles;
 
 							Vector3 eulerDiff = offsetEuler - connEuler;
-							
+                            eulerDiff.y += 180.0f;
 							var rot = vrInputManager.RightControllerTransform.forward;
 							rot = Quaternion.Euler(eulerDiff) * rot;
 							
@@ -55,7 +53,9 @@ public class PlayerMovementController : MonoBehaviour
 							pos = Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f)) * pos;
 							var newPos = connectedPortal.transform.TransformPoint(pos);
 
-							if (Physics.Raycast(newPos, rot, out var hit2) && hit2.collider.CompareTag("TeleportationArea"))
+							Debug.DrawRay(newPos + 0.01f * rot, rot, Color.red, 5);
+
+							if (Physics.Raycast(newPos + 0.01f * rot, rot, out var hit2) && hit2.collider.CompareTag("TeleportationArea"))
 							{
 								player.position = new Vector3(hit2.point.x, hit2.point.y, hit2.point.z);
 								player.rotation = Quaternion.Euler(eulerDiff) * player.rotation;
