@@ -19,6 +19,7 @@ public class LeverInteraction : MonoBehaviour
         set => vrInputManager = value;
     }
 
+    [SerializeField] private GameObject gameObjectToActivate;
 
     void Start()
     {
@@ -65,6 +66,7 @@ public class LeverInteraction : MonoBehaviour
 
         m_OffChild.SetActive(!isActivated);
         m_OnChild.SetActive(isActivated);
+        gameObjectToActivate.SetActive(isActivated);
     }
 
     void OnTriggerEnter(Collider collider)

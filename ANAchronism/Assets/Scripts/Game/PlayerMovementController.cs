@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,9 +65,13 @@ public class PlayerMovementController : MonoBehaviour
 					}
 				}
 				else if (hit.collider.CompareTag("TeleportationArea"))
-				{
-					player.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-				}
+                {
+                    float d = Vector3.Distance(player.position, hit.point);
+                    if (Math.Abs(d) < 3f)
+                    {
+                        player.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                    }
+                }
 			}
 		}
 	}

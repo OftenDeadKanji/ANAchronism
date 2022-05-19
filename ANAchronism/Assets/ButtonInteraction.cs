@@ -21,6 +21,7 @@ public class ButtonInteraction : MonoBehaviour
         set => vrInputManager = value;
     }
 
+    [SerializeField] private List<GameObject> gameObjectToActivate;
     void Start()
     {
         m_Renderer = m_SphereChild.GetComponent<Renderer>();
@@ -35,6 +36,8 @@ public class ButtonInteraction : MonoBehaviour
         {
             Debug.LogError("vrInputManager is missing in PlayerMovementController!");
         }
+
+        //gameObjectToActivate = new List<GameObject>();
     }
 
     void FixedUpdate()
@@ -67,6 +70,11 @@ public class ButtonInteraction : MonoBehaviour
     {
         isActivated = !isActivated;
         m_Renderer.material = isActivated ? m_ButtonActivateMaterial : m_ButtonInactivateMaterial;
+
+        foreach (var go in gameObjectToActivate)
+        {
+            go.SetActive(isActivated);
+        }
     }
 
     void OnTriggerEnter(Collider collider)
