@@ -8,7 +8,7 @@ public class ButtonInteraction : MonoBehaviour
     [SerializeField] private GameObject m_SphereChild;
     [SerializeField] Material m_ButtonActivateMaterial;
     [SerializeField] Material m_ButtonInactivateMaterial;
-    private bool isActivated = false;
+    [SerializeField] private bool isActivated = false;
     Renderer m_Renderer;
 
     [SerializeField] GameObject m_Canvas;
